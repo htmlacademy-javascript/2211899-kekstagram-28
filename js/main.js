@@ -1,98 +1,93 @@
-const getNumberSymbols = (string,stringLength) =>{
-  return string.length <= stringLength;
-}
+const getRandomInteger = (a, b) => {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
 
-const getStringLenght = (string,stringLength) =>{
-        return string.length <= stringLength;
+const AVATAR_COUNT = 6;
+const LIKE_MIN_COUNT = 15;
+const LIKE_MAX_COUNT = 200;
+const MIN_COMMENT_ID = 1;
+const MAX_COMMENT_ID = 500;
+const COMMENT_COUNT = 20;
+const SIMILAR_PHOTO_COUNT = 25;
+
+const DESCRIPTIONS = [
+  'Пляж у отеля',
+  'Дорожный знак',
+  'Побережье у гор',
+  'Красивая девушка',
+  'Суп с улыбающимся рисом',
+  'Спортивная машина',
+  'Разрезанная клубника',
+  'Пролетающий самолёт над пляжем',
+  'Обувная полка',
+  'Плантация',
+  'Ауди',
+  'Салат с рыбой',
+  'Кот завернутый в ролл',
+  'Тапочки',
+  'Горы с высоты полета',
+  'Хор',
+  'Старая машина',
+  'Тапочки с подсветкой',
+  'Пальмы около отеля',
+  'Плов',
+  'Берег моря',
+  'Крабик',
+  'Тусовка в клубе',
+  'Сафари',
+];
+
+const COMMENTS = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+];
+
+const NAME = ['Иван', 'Евгений', 'Александра', 'Дарья', 'Михаил', 'Светлана'];
+
+const getRandomArrayElement = (elements) =>
+  elements[getRandomInteger(0, elements.length - 1)];
+
+const createRandomIdFromRangeGenerator = (min, max) => {
+  const previousValues = [];
+
+  return function () {
+    let currentValue = getRandomInteger(min, max);
+    if (previousValues.length >= max - min + 1) {
+      return null;
     }
-    const getIsStringPalindrom = (stringSS) =>{
-        let stWithoutWS =  stringSS.replace(/\s/g, "");
-        let arrayOfSymbols = stWithoutWS.toLowerCase().split('');
-
-        for (let i = 0; i <= arrayOfSymbols.length /2; i++){
-            if (arrayOfSymbols.at(i) != arrayOfSymbols.at(-i -1)){
-                return 'Word is not a palindrom';
-            }
-            else {
-                return 'Word is a palindrom'
-            }
-        }
-
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(min, max);
     }
-    console.log(getIsStringPalindrom('Лёша на полке клопа нашёл '));
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+};
 
-const getNumberFromString = (str) => {
-            let regex = /\d+/g;
-            let matches = str.match(regex);
-            let resultStr = '';
-            if(matches != null){
-                let result = matches.forEach((match)=>{
-                    resultStr += match
-                })
-                return resultStr;
-            }
-            else{
-                return NaN;
-            }
+const generateIdComment = createRandomIdFromRangeGenerator(MIN_COMMENT_ID, MAX_COMMENT_ID);
 
-        }
-        console.log(getNumberFromString("4а 3я то2м23ат"));
+const createMessage = () => Array.from({length: getRandomInteger(1, 2)}, () => getRandomArrayElement(COMMENTS)).join(' ');
 
-        const getStringWithAdditional = (str, maxStrLength, additionalSymb) => {
-          let cuttedAdditionalSymb = additionalSymb.substring(0,maxStrLength)
-          let reversedArrayOfAddSymb = cuttedAdditionalSymb.split("").reverse().join("");
-          let arrayOfSymbols = str.split('');
-          if (maxStrLength > str.length) {
-              for (let index = 1; index < maxStrLength; index++) {
-                  //Проверка для одного символа
-                  if (reversedArrayOfAddSymb.length == 1) {
-                      arrayOfSymbols.unshift(reversedArrayOfAddSymb[0]);
-                  }
-                  //Проверка для полтора
-                  else if (additionalSymb.length > 1 && additionalSymb.length + str.length < maxStrLength) {
-                      arrayOfSymbols.unshift(reversedArrayOfAddSymb[index -1]);
-                      if(arrayOfSymbols.length < maxStrLength)
-                      {
-                          arrayOfSymbols.unshift(cuttedAdditionalSymb[0]);
-                      }
-                  }
-                  //Проверка на совпадение суммы длинны доп. выражения и строки с максимальной длиной строки
-                  else if (additionalSymb.length + str.length == maxStrLength) {
-                      arrayOfSymbols.unshift(reversedArrayOfAddSymb[index -1]);
-                  }
-                  //Проверка, когда длина доб. символа превышает максимальную длину строки
-                  else{
-                      arrayOfSymbols.unshift(reversedArrayOfAddSymb[index]);
-                  }
-              }
-              console.log(arrayOfSymbols.join(''));
-          }
-          //Когда нет добавочных символов
-          else {
-              console.log(str);
-          }
-      }
+const createComment = () => ({
+  id: generateIdComment(),
+  avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
+  message: createMessage(),
+  name: getRandomArrayElement(NAME),
+});
 
-      // Добавочный символ использован один раз
-      getStringWithAdditional('1', 2, '0');
-      // Результат: строка '01'
+const createDescriptionPhoto = (index) => ({
+  id: index,
+  url: `photos/${index}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
+  comments: Array.from({length: getRandomInteger(0, COMMENT_COUNT)}, createComment)
+});
 
-      // Добавочный символ использован три раза
-      getStringWithAdditional('1', 4, '0');
-      // Результат: строка '0001'
-
-      // Добавочные символы обрезаны с конца
-      getStringWithAdditional('q', 4, 'werty');
-      // Результат: строка 'werq'
-
-      // Добавочные символы использованы полтора раза
-      getStringWithAdditional('q', 4, 'we');
-      // Результат: строка 'wweq'
-
-      // Добавочные символы не использованы, исходная строка не изменена
-      getStringWithAdditional('qwerty', 4, '0');
-      // Результат: строка 'qwerty'
-
-      // Добавочные символы использованы полтора раза
-      getStringWithAdditional('q', 4, 'wew');
-      // Результат: строка 'wewq'
+const createSimilarDescriptionPhoto = () => Array.from({length: SIMILAR_PHOTO_COUNT}, (_, index) => createDescriptionPhoto(index + 1));
+createSimilarDescriptionPhoto();
