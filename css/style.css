@@ -302,6 +302,10 @@ main {
   border: none;
 }
 
+.pristine-error {
+  color: red;
+}
+
 .img-upload__start {
   position: relative;
 
