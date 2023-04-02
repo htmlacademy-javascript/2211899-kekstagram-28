@@ -14,9 +14,6 @@ const overlay = document.querySelector('.img-upload__overlay');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const commentTextarea = document.querySelector('.text__description');
 
-let isUploadFormSending = false;
-
-
 const closeModal = () => {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -53,14 +50,11 @@ const showModal = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 
   uploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-
     const isValid = pristine.validate();
     if (!isValid) {
-      return;
+      evt.preventDefault();
+      evt.stopPropagation();
     }
-
-    isUploadFormSending = true;
   });
 };
 
