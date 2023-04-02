@@ -9,7 +9,6 @@ const biggerButtonElement = document.querySelector('.scale__control--bigger');
 const scaleInputElement = document.querySelector('.scale__control--value');
 
 //Функция изменения масштаба картинки
-
 const scaleImage = (value) => {
   imageElement.style.transform = `scale(${value / 100})`;
   scaleInputElement.value = `${value}%`;

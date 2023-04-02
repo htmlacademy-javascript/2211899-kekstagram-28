@@ -11,8 +11,8 @@ const uploadForm = document.querySelector('.img-upload__form');
 // const effectLevelElement = document.querySelector('.effect-level');
 // const effectsListElement = document.querySelector('.effects__list');
 const overlay = document.querySelector('.img-upload__overlay');
-const hashtagsInput = document.querySelector('text__hashtags');
-const commentTextarea = document.querySelector('text__description');
+const hashtagsInput = document.querySelector('.text__hashtags');
+const commentTextarea = document.querySelector('.text__description');
 
 let isUploadFormSending = false;
 
