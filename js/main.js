@@ -1,9 +1,8 @@
 import {showPosts} from './miniature.js';
-import {createSimilarDescriptionPhoto} from './data.js';
-import {initForm} from './form.js';
+import {initForm, setUserFormSubmit, closeModal} from './form.js';
+import { getData } from './api.js';
 
 
-const posts = createSimilarDescriptionPhoto();
-showPosts(posts);
 initForm();
-
+getData(showPosts);
+setUserFormSubmit(closeModal);
