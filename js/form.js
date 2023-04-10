@@ -29,6 +29,7 @@ const closeModal = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   resetEffects();
   resetScale();
+  pristine.reset();
   uploadForm.reset();
 };
 
@@ -69,13 +70,7 @@ const showModal = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const initForm = () => {
-  uploadFile.addEventListener('change', () => {
-    showModal();
-  });
-};
-
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = () => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -83,7 +78,7 @@ const setUserFormSubmit = (onSuccess) => {
       blockSubmitButton();
       sendData(
         () => {
-          onSuccess();
+          closeModal();
           blockSubmitButton();
           showSuccessMessage();
         },
@@ -97,5 +92,11 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
+const initForm = () => {
+  uploadFile.addEventListener('change', () => {
+    showModal();
+  });
+  setUserFormSubmit();
+};
 
-export {initForm, setUserFormSubmit, closeModal, onDocumentKeydown};
+export {initForm, closeModal, onDocumentKeydown};
