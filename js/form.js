@@ -5,6 +5,9 @@ import { resetScale } from './picture-size.js';
 import { sendData } from './api.js';
 import { showSuccessMessage } from './show-massage.js';
 
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Опубликовываю...'
@@ -55,6 +58,20 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
 };
+
+//Функция загрузки фотографии
+
+const fileChooser = document.querySelector('#upload-file');
+const preview = document.querySelector('.img-upload__preview img');
+
+fileChooser.addEventListener('change', () => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+  }
+});
 
 const showModal = () => {
   overlay.classList.remove('hidden');
