@@ -21,7 +21,7 @@ pristine.addValidator(
   hashtagInputElement,
   (value) => {
     /* Проверка значения на строковый тип */
-    if (value === '') {
+    if (!value) {
       return true;
     }
     return value.startsWith('#');
@@ -34,7 +34,7 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInputElement,
   (value) => {
-    if (value === '') {
+    if (!value) {
       return true;
     }
     return !value.endsWith(' ');
@@ -47,7 +47,7 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInputElement,
   (value) => {
-    if (value === '') {
+    if (!value) {
       return true;
     }
     const words = value.split(' ');
@@ -61,7 +61,7 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInputElement,
   (value) => {
-    if (value === '') {
+    if (!value) {
       return true;
     }
     const words = value.split(' ');
@@ -74,7 +74,7 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInputElement,
   (value) => {
-    if (value === '') {
+    if (!value) {
       return true;
     }
     const words = value.trim().split(' ');
@@ -88,7 +88,7 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInputElement,
   (value) => {
-    if (value === '') {
+    if (!value) {
       return true;
     }
     const words = value.toLowerCase().split(' ');
@@ -103,7 +103,7 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInputElement,
   (value) => {
-    if (value === '') {
+    if (!value) {
       return true;
     }
     const words = value.split(' ');
