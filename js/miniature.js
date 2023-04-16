@@ -1,13 +1,13 @@
 import {showBigPicture} from './big-picture.js';
 
-const picturePlace = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const picturePlaceElement = document.querySelector('.pictures');
+const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 
 const showPosts = (posts) => {
   const postsFragment = document.createDocumentFragment();
 
-  for (const post of posts) {
-    const pictureElement = pictureTemplate.cloneNode(true);
+  posts.forEach((post) => {
+    const pictureElement = pictureTemplateElement.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = post.url;
     pictureElement.querySelector('.picture__likes').textContent = post.likes;
     pictureElement.querySelector('.picture__comments').textContent = post.comments.length;
@@ -15,8 +15,8 @@ const showPosts = (posts) => {
     pictureElement.addEventListener('click', () => {
       showBigPicture(post);
     });
-  }
-  picturePlace.appendChild(postsFragment);
+  });
+  picturePlaceElement.appendChild(postsFragment);
 };
 
 export {showPosts};

@@ -1,9 +1,9 @@
 import { isEscapeKey } from './util.js';
 
-const body = document.querySelector('body');
+const bodyElement = document.querySelector('body');
 const bigPictureElement = document.querySelector('.big-picture');
 const cancelPictureButtonElement = bigPictureElement.querySelector('.cancel');
-const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+const commentsElement = document.querySelector('#comment').content.querySelector('.social__comment');
 const commentsContainerElement = document.querySelector('.social__comments');
 const commentCountElement = document.querySelector('.social__comment-count');
 const commentLoaderButtonElement = document.querySelector('.comments-loader');
@@ -14,7 +14,7 @@ const commentCountAdd = 5;
 
 const createComment = (comment) => {
   const { avatar, name, message } = comment;
-  const commentElement = commentTemplate.cloneNode(true);
+  const commentElement = commentsElement.cloneNode(true);
 
   commentElement.querySelector('.social__picture').src = avatar;
   commentElement.querySelector('.social__picture').alt = name;
@@ -34,7 +34,6 @@ const renderComments = () => {
   });
 
   commentsContainerElement.append(fragment);
-
   commentCountElement.childNodes[0].nodeValue = `${commentsContainerElement.children.length} комментариев из ${basicComments.length}`;
 
   if (commentsContainerElement.children.length === basicComments.length) {
@@ -55,7 +54,7 @@ const onCommentsLoaderClick = () => {
 
 const closeBigPicture = () => {
   bigPictureElement.classList.add('hidden');
-  body.classList.remove('modal-open');
+  bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
@@ -70,7 +69,7 @@ const showBigPicture = ({url, likes, description, comments}) => {
   clearComments();
 
   bigPictureElement.classList.remove('hidden');
-  body.classList.add('modal-open');
+  bodyElement.classList.add('modal-open');
   commentLoaderButtonElement.classList.remove('hidden');
 
   bigPictureElement.querySelector('.big-picture__img img').src = url;
@@ -90,6 +89,7 @@ const showBigPicture = ({url, likes, description, comments}) => {
     closeBigPicture();
   });
   document.addEventListener('keydown', onDocumentKeydown);
+  commentCountElement.childNodes[0].nodeValue = `${commentsContainerElement.children.length} комментариев из ${basicComments.length}`;
   commentLoaderButtonElement.addEventListener('click', onCommentsLoaderClick);
 };
 

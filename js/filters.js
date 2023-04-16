@@ -8,7 +8,7 @@ const Filter = {
 };
 
 const filterElement = document.querySelector('.img-filters');
-const postsContainer = document.querySelector('.pictures');
+const postsContainerElement = document.querySelector('.pictures');
 
 let currentFilter = Filter.DEFAULT;
 let posts = [];
@@ -17,7 +17,7 @@ const sortRandom = () => Math.random() - 0.5;
 const sortDISCUSSED = (pictureFirst, pictureNext) => pictureNext.comments.length - pictureFirst.comments.length;
 
 const clearOldPosts = () => {
-  const postsElement = postsContainer.querySelectorAll('.picture');
+  const postsElement = postsContainerElement.querySelectorAll('.picture');
 
   postsElement.forEach((post) => {
     post.remove();
@@ -52,10 +52,10 @@ const setOnFilterClick = (cb) => {
   });
 };
 
-const init = (data, cb) => {
+const initinitialization = (data, cb) => {
   filterElement.classList.remove('img-filters--inactive');
   posts = [...data];
   setOnFilterClick(cb);
 };
 
-export { init, getFilter };
+export { initinitialization, getFilter };
