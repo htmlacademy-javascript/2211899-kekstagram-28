@@ -52,10 +52,10 @@ const setOnFilterClick = (cb) => {
   });
 };
 
-const initinitialization = (data, cb) => {
+const initFilters = (data, cb) => {
   filterElement.classList.remove('img-filters--inactive');
   posts = [...data];
   setOnFilterClick(cb);
 };
 
-export { initinitialization, getFilter };
+export { initFilters, getFilter };
