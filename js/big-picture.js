@@ -7,10 +7,11 @@ const commentsElement = document.querySelector('#comment').content.querySelector
 const commentsContainerElement = document.querySelector('.social__comments');
 const commentCountElement = document.querySelector('.social__comment-count');
 const commentLoaderButtonElement = document.querySelector('.comments-loader');
+const commentCountAdd = 5;
 
 let commentShown = 0;
 let basicComments = null;
-const commentCountAdd = 5;
+
 
 const createComment = (comment) => {
   const { avatar, name, message } = comment;

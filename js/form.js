@@ -3,7 +3,7 @@ import { pristine } from './validation.js';
 import { resetEffects } from './picture-effect.js';
 import { resetScale } from './picture-size.js';
 import { sendData } from './api.js';
-import { showSuccessMessage } from './show-massage.js';
+import { showSuccessMessage, showErrorMessage } from './show-massage.js';
 
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -35,7 +35,13 @@ const closeModal = () => {
   uploadFormElement.reset();
 };
 
-const onInputKeyDown = (evt) => {
+const onCommentTextareaInput = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+};
+
+const onHashtagsInput = (evt) => {
   if (isEscapeKey(evt)) {
     evt.stopPropagation();
   }
@@ -65,14 +71,14 @@ const showModal = () => {
     closeModal();
   });
   // Отмена закрытия модального окана, когда фокус в поле ввода хеш-тегов
-  hashtagsInputElement.addEventListener('keydown', onInputKeyDown);
+  hashtagsInputElement.addEventListener('keydown', onHashtagsInput);
 
   // Отмена закрытия модального окана, когда фокус в поле ввода комментариев
-  commentTextareaElement.addEventListener('keydown', onInputKeyDown);
+  commentTextareaElement.addEventListener('keydown', onCommentTextareaInput);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = () => {
   uploadFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -80,10 +86,12 @@ const setUserFormSubmit = (onSuccess) => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(() => {
-          onSuccess();
+          uploadFormElement.reset();
+          closeModal();
+          showSuccessMessage();
         })
-        .catch((err) => {
-          showSuccessMessage(err.message);
+        .catch(() => {
+          showErrorMessage();
         })
         .finally(unblockSubmitButton);
     }
